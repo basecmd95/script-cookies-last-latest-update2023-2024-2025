@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Your Website Title</title>
+  <style>
+    /* CSS code here */
+    .cookie-choices-info {
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      width: auto;
+      background-color: #F8F8F8;
+      padding: 10px;
+      border: 1px solid #CCCCCC;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      z-index: 9999;
+      text-align: center;
+      color: #333333;
+      font-family: Arial, sans-serif;
+      line-height: 1.5;
+      /* Added animation properties */
+      animation: borderAnimation 2s infinite ease-in-out;
+    }
+
+    /* Define the animation */
+    @keyframes borderAnimation {
+      0% {
+        border-color: #CCCCCC;
+      }
+      50% {
+        border-color: #FF0000; /* Animated to red color */
+      }
+      100% {
+        border-color: #CCCCCC;
+      }
+    }
+
+    .cookie-choices-info .cookie-choices-text {
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .cookie-choices-info .cookie-choices-button {
+      background-color: transparent;
+      color: #FF0000;
+      padding: 6px 12px;
+      font-size: 12px;
+      border-radius: 3px;
+      border: none; /* Remove the border */
+    }
+
+    .cookie-choices-info .cookie-choices-button:hover {
+      background-color: #555555;
+    }
+
+    .cookie-choices-info .cookie-choices-close {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      color: #FFD700; /* Yellow color */
+      cursor: pointer;
+    }
+
+    .cookie-choices-info .cookie-choices-close:hover {
+      color: #FFD700; /* Yellow color on hover */
+    }
+
+    .fa.fa-close {
+      font-size: 14px;
+    }
+
+    @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
+  </style>
+</head>
+<body>
+  <script>
+    // JavaScript code here
+    function setCookie(name, value, days) {
+      var expires = "";
+      if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+      }
+      document.cookie = name + "=" + (value || "") + expires + "; path=/";
+    }
+
+    function getCookie(name) {
+      var nameEQ = name + "=";
+      var ca = document.cookie.split(";");
+      for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) === " ") c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+      }
+      return null;
+    }
+
+    function cookieConsent() {
+      if (!getCookie("cookieConsent")) {
+        var cookieBanner = document.createElement("div");
+        cookieBanner.className = "cookie-choices-info";
+        cookieBanner.innerHTML =
+          '<div class="cookie-choices-inner">' +
+          '<div class="cookie-choices-text">This website uses cookies to ensure you get the best experience on our website.</div>' +
+          '<div class="cookie-choices-buttons">' +
+          '<button class="cookie-choices-button" onclick="acceptCookies()">Accept</button>' +
+          '<a href="learn-more.html" target="_blank" class="cookie-choices-learn-more"><i class="fa fa-shield"></i> Learn More</a>' +
+          '</div>' +
+          '<span class="cookie-choices-close" onclick="closeBanner()">&times;</span>' +
+          '</div>';
+        document.body.appendChild(cookieBanner);
+      }
+    }
+
+    function acceptCookies() {
+      setCookie("cookieConsent", true, 1);
+      var cookieBanner = document.querySelector(".cookie-choices-info");
+      if (cookieBanner) {
+        cookieBanner.remove();
+      }
+    }
+
+    function closeBanner() {
+      var cookieBanner = document.querySelector(".cookie-choices-info");
+      if (cookieBanner) {
+        cookieBanner.remove();
+      }
+    }
+
+    window.onload = function() {
+      cookieConsent();
+    };
+  </script>
+</body>
+</html>
